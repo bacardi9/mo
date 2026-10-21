@@ -1,4 +1,4 @@
-const V='mopla-v1';
+const V='mopla-v2';
 const SHELL=['./index.html','./manifest.json','./icon.svg'];
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(V).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()));
