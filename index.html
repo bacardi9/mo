@@ -36,6 +36,7 @@ img{display:block;max-width:100%;}
 button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit;}
 input{font-family:inherit;}
 ::-webkit-scrollbar{width:0;height:0;}
+.defs{position:absolute;width:0;height:0;overflow:hidden;}
 
 /* ---------- STATUS BAR ---------- */
 .statusbar{
@@ -95,8 +96,9 @@ body.standalone .statusbar{display:none!important;}
 .searchbar .mag{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:2.2;flex:none;}
 .searchbar input{flex:1;border:none;outline:none;font-size:16px;font-weight:600;color:var(--ink);background:none;}
 .searchbar input::placeholder{color:var(--ink);font-weight:600;}
-.cars{display:flex;gap:2px;flex:none;}
-.cars svg{width:30px;height:24px;}
+.cars{display:flex;gap:3px;flex:none;}
+.cars svg{width:32px;height:26px;}
+.veh{display:block;}
 
 .sec-pad{padding:0 18px;}
 .sec-title{font-size:21px;font-weight:800;color:var(--navy);margin:22px 0 14px;letter-spacing:-.2px;}
@@ -125,15 +127,16 @@ body.standalone .statusbar{display:none!important;}
 }
 .svc:active{transform:scale(.97);}
 .svc .ic{height:54px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;}
-.svc .ic svg{width:54px;height:54px;}
+.svc .ic svg{width:56px;height:56px;}
 .svc h4{font-size:15px;font-weight:700;color:var(--ink);}
 .svc p{font-size:13px;color:var(--gray);}
 
 .scroller{display:flex;gap:14px;overflow-x:auto;padding:2px 0 18px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
 .scroller::-webkit-scrollbar{display:none;}
 .mcard{min-width:248px;max-width:248px;flex:none;scroll-snap-align:start;}
-.mcard .ph{width:100%;height:178px;border-radius:16px;overflow:hidden;background:var(--bg-soft);margin-bottom:12px;}
-.mcard .ph svg,.mcard .ph img{width:100%;height:100%;object-fit:cover;}
+.mcard .ph{position:relative;width:100%;height:178px;border-radius:16px;overflow:hidden;margin-bottom:12px;background:var(--pg,linear-gradient(135deg,#2a2330,#3a3340));}
+.mcard .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.mcard .ph::after{content:"";position:absolute;inset:0;background:radial-gradient(125% 125% at 50% 28%,transparent 52%,rgba(0,0,0,.30));pointer-events:none;}
 .mcard h4{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:6px;}
 .mcard p{font-size:13px;color:var(--gray);line-height:1.5;}
 
@@ -196,10 +199,12 @@ body.standalone .statusbar{display:none!important;}
 .dhead h2{font-size:18px;font-weight:800;color:var(--navy);}
 .dhead .ib svg{width:22px;height:22px;stroke:var(--navy);fill:none;stroke-width:2;}
 .dcard{margin:16px;border:1px solid var(--line);border-radius:18px;box-shadow:0 4px 22px rgba(20,25,60,.08);position:relative;overflow:hidden;padding:18px 16px;}
-.dcard .cut{position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;border:1px solid var(--line);left:62px;z-index:3;}
-.dcard .cut.t{top:-10px;}.dcard .cut.b{bottom:-10px;}
-.dcard .vline{position:absolute;left:71px;top:0;bottom:0;border-left:1.5px dashed #d4d7df;z-index:2;}
-.dtop{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:4;margin-bottom:18px;}
+/* horizontal tear-line under the logo/price header, notches on left+right edges */
+.dperf{position:relative;height:0;margin:16px -16px 0;border-top:1.5px dashed #d4d7df;}
+.dperf::before,.dperf::after{content:"";position:absolute;top:50%;width:18px;height:18px;border-radius:50%;background:#fff;border:1px solid var(--line);transform:translateY(-50%);}
+.dperf::before{left:-10px;}
+.dperf::after{right:-10px;}
+.dtop{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:4;margin-bottom:0;}
 .wordmark{display:flex;align-items:flex-end;line-height:1;}
 .wordmark .w{font-size:30px;font-weight:800;letter-spacing:-.5px;}
 .wordmark .mu{color:var(--purple);} .wordmark .pl{color:var(--navy);}
@@ -210,26 +215,28 @@ body.standalone .statusbar{display:none!important;}
 .pla-stack .tick{position:absolute;top:100%;left:0;right:0;margin-top:2px;display:flex;justify-content:space-between;font-size:9px;font-weight:700;color:var(--purple);line-height:1;white-space:nowrap;}
 .pla-stack .tick span{display:inline-block;}
 .dprice{text-align:right;}
-.dprice .a{font-size:17px;font-weight:700;color:var(--ink);}
+.dprice .a{font-size:17px;font-weight:400;color:var(--ink);}
 .dprice .v{font-size:11.5px;color:var(--gray);margin-top:2px;}
-.dnamerow{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:4;margin-bottom:12px;}
+.dnamerow{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:4;margin-top:16px;margin-bottom:12px;}
 .dname{font-size:16px;font-weight:700;color:var(--ink);}
 .dlbl{font-size:13px;color:var(--gray);position:relative;z-index:4;}
-.ddate{font-size:16px;font-weight:700;color:var(--ink);position:relative;z-index:4;margin:2px 0;}
+.ddate{font-size:16px;font-weight:400;color:var(--ink);position:relative;z-index:4;margin:2px 0;}
 .dcount{font-size:13px;color:var(--gray);position:relative;z-index:4;margin-bottom:14px;}
 .qrbox{width:100%;aspect-ratio:1/1;position:relative;z-index:4;display:flex;align-items:center;justify-content:center;margin-bottom:14px;background:#fff;overflow:hidden;}
 .qrbox canvas,#qrImg{width:100%;height:100%;display:block;}
 .qrbox canvas{image-rendering:pixelated;}
 #qrImg{object-fit:contain;background:#fff;}
 .idrow{display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:4;margin-bottom:16px;}
-.idval{display:inline-block;margin-top:4px;background:var(--navy);color:#fff;font-size:13px;font-weight:700;padding:5px 13px;border-radius:8px;}
+.idval{display:inline-block;margin-top:4px;color:var(--ink);font-size:15px;font-weight:400;text-transform:uppercase;letter-spacing:.3px;}
 .dtmini{display:flex;flex-direction:column;align-items:center;gap:2px;}
 .dtmini svg{width:32px;height:32px;}
 .dtmini b{font-size:8px;font-weight:800;color:var(--navy);letter-spacing:.6px;}
 .gwallet{display:flex;align-items:center;justify-content:center;gap:10px;background:#15172a;color:#fff;border-radius:30px;padding:11px 22px;margin:0 auto;position:relative;z-index:4;}
 .gwallet svg{width:26px;height:26px;flex:none;}
-.gwallet span{font-size:13px;font-weight:600;line-height:1.25;text-align:left;}
-.gwallet span b{font-weight:700;}
+/* flip flex-start -> flex-end to right-align the top line to the end of "Wallet" */
+.gwallet span{display:flex;flex-direction:column;align-items:flex-start;text-align:left;line-height:1.12;}
+.gwallet .gl-top{font-size:11px;font-weight:400;}
+.gwallet .gl-bot{font-size:16px;font-weight:700;letter-spacing:.2px;}
 .dinfo{padding:4px 18px 8px;}
 .dinfo h4{font-size:13px;color:var(--gray);font-weight:500;margin:16px 0 4px;}
 .dinfo h4:first-child{margin-top:4px;}
@@ -276,6 +283,17 @@ body.standalone .statusbar{display:none!important;}
 </head>
 <body>
 
+<!-- shared 3D-shading gradients for all vehicle icons -->
+<svg class="defs" aria-hidden="true"><defs>
+  <linearGradient id="carBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#eaf0f7"/><stop offset="1" stop-color="#aebccd"/></linearGradient>
+  <linearGradient id="carGlass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cfe8ff"/><stop offset="1" stop-color="#4f7ba6"/></linearGradient>
+  <linearGradient id="vanBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eafff0"/><stop offset=".5" stop-color="#cdeed6"/><stop offset="1" stop-color="#9cc9a8"/></linearGradient>
+  <linearGradient id="vanGlass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eafff3"/><stop offset="1" stop-color="#7fb89a"/></linearGradient>
+  <linearGradient id="busBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#efe6fb"/><stop offset=".5" stop-color="#d8c4ef"/><stop offset="1" stop-color="#b394d6"/></linearGradient>
+  <linearGradient id="busGlass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eaf3ff"/><stop offset="1" stop-color="#7fa6cf"/></linearGradient>
+  <radialGradient id="wheelGrad" cx=".38" cy=".32" r=".75"><stop offset="0" stop-color="#6b7686"/><stop offset=".55" stop-color="#2b333e"/><stop offset="1" stop-color="#0e131a"/></radialGradient>
+</defs></svg>
+
 <!-- ================= SPLASH (shows once, then never again) ================= -->
 <div class="splash" id="splash">
   <div class="statusbar sb-splash"><span class="sb-time" id="sbTimeS">12:00</span><span class="sb-right" id="sbRightS"></span></div>
@@ -310,9 +328,12 @@ body.standalone .statusbar{display:none!important;}
         <svg class="mag" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
         <input type="text" placeholder="Fahrt suchen" readonly onclick="go('page-suche')">
         <div class="cars">
-          <svg viewBox="0 0 40 30"><ellipse cx="20" cy="26" rx="15" ry="2.4" fill="#c9d2dd"/><path d="M6 20c0-3 2-5 5-6l4-5c1-1 3-2 6-2h4c3 0 5 1 7 3l3 5c2 1 3 2 3 5v2H6z" fill="#dbe6f2" stroke="#9fb3c8" stroke-width="1"/><path d="M13 14l3-4h5v4zM23 10h4l3 4h-7z" fill="#7fa6cf"/><circle cx="13" cy="22" r="2.4" fill="#3a4a5e"/><circle cx="28" cy="22" r="2.4" fill="#3a4a5e"/></svg>
-          <svg viewBox="0 0 40 30"><ellipse cx="20" cy="26" rx="15" ry="2.4" fill="#cdd8cf"/><path d="M5 21V12c0-2 1-3 3-3h16l8 5v7z" fill="#dff0e2" stroke="#8fb89a" stroke-width="1"/><path d="M25 11l6 4h-6z" fill="#86c79a"/><rect x="9" y="12" width="6" height="5" fill="#86c79a"/><rect x="17" y="12" width="6" height="5" fill="#86c79a"/><circle cx="12" cy="22" r="2.4" fill="#3a4a3e"/><circle cx="29" cy="22" r="2.4" fill="#3a4a3e"/></svg>
-          <svg viewBox="0 0 40 30"><ellipse cx="20" cy="26" rx="15" ry="2.4" fill="#d6cfe2"/><rect x="6" y="9" width="28" height="13" rx="2.5" fill="#cdb8e6" stroke="#9b7fc4" stroke-width="1"/><rect x="6" y="16" width="28" height="2.4" fill="#a07fce"/><rect x="9" y="11" width="5" height="4" fill="#efe7f8"/><rect x="16" y="11" width="5" height="4" fill="#efe7f8"/><rect x="23" y="11" width="5" height="4" fill="#efe7f8"/><circle cx="13" cy="23" r="2.2" fill="#3a3450"/><circle cx="28" cy="23" r="2.2" fill="#3a3450"/></svg>
+          <!-- 3D sedan -->
+          <svg class="veh" viewBox="0 0 64 48"><ellipse cx="33" cy="41" rx="25" ry="4.5" fill="#0a1020" opacity=".16"/><path d="M7 32c0-4 3-6 7-7l6-7c2-3 5-4 9-4h11c6 0 9 2 12 6l4 5c3 1 5 3 5 7v2c0 2-1 3-3 3H10c-2 0-3-1-3-3z" fill="url(#carBody)" stroke="#93a4b8" stroke-width=".8"/><path d="M20 25l5-6c1-2 3-3 6-3h9c3 0 5 1 7 4l3 5z" fill="url(#carGlass)"/><path d="M24 24l4-5h3l-4 5z" fill="#fff" opacity=".5"/><path d="M12 30c2-2 6-2 10-2h26c4 0 7 0 9 2" fill="none" stroke="#fff" stroke-width="1.1" opacity=".45"/><circle cx="20" cy="35" r="5.2" fill="url(#wheelGrad)"/><circle cx="20" cy="35" r="1.9" fill="#d7dee7"/><circle cx="47" cy="35" r="5.2" fill="url(#wheelGrad)"/><circle cx="47" cy="35" r="1.9" fill="#d7dee7"/></svg>
+          <!-- 3D van -->
+          <svg class="veh" viewBox="0 0 64 48"><ellipse cx="33" cy="41" rx="25" ry="4.5" fill="#0a1020" opacity=".16"/><path d="M8 34V18c0-3 2-5 5-5h20l16 9c2 1 3 2 3 5v7c0 2-1 3-3 3H11c-2 0-3-1-3-3z" fill="url(#vanBody)" stroke="#7fae8c" stroke-width=".8"/><path d="M33 14l13 8H33z" fill="url(#vanGlass)"/><rect x="13" y="16" width="9" height="8" rx="1" fill="url(#vanGlass)"/><rect x="24" y="16" width="8" height="8" rx="1" fill="url(#vanGlass)"/><path d="M14 17h7v2h-7z" fill="#fff" opacity=".4"/><path d="M10 30c2-1 5-1 8-1h30c3 0 5 0 7 1" fill="none" stroke="#fff" stroke-width="1" opacity=".4"/><circle cx="19" cy="36" r="5" fill="url(#wheelGrad)"/><circle cx="19" cy="36" r="1.8" fill="#d7dee7"/><circle cx="46" cy="36" r="5" fill="url(#wheelGrad)"/><circle cx="46" cy="36" r="1.8" fill="#d7dee7"/></svg>
+          <!-- 3D bus -->
+          <svg class="veh" viewBox="0 0 64 48"><ellipse cx="33" cy="42" rx="26" ry="4" fill="#0a1020" opacity=".16"/><rect x="7" y="13" width="50" height="22" rx="4" fill="url(#busBody)" stroke="#9b84c4" stroke-width=".8"/><rect x="7" y="26" width="50" height="4" fill="#7c5fb0" opacity=".55"/><rect x="11" y="16" width="9" height="7" rx="1.2" fill="url(#busGlass)"/><rect x="22" y="16" width="9" height="7" rx="1.2" fill="url(#busGlass)"/><rect x="33" y="16" width="9" height="7" rx="1.2" fill="url(#busGlass)"/><rect x="44" y="16" width="9" height="7" rx="1.2" fill="url(#busGlass)"/><rect x="12" y="17" width="7" height="2" fill="#fff" opacity=".4"/><rect x="23" y="17" width="7" height="2" fill="#fff" opacity=".4"/><rect x="34" y="17" width="7" height="2" fill="#fff" opacity=".4"/><rect x="45" y="17" width="7" height="2" fill="#fff" opacity=".4"/><circle cx="18" cy="36" r="4.6" fill="url(#wheelGrad)"/><circle cx="18" cy="36" r="1.7" fill="#d7dee7"/><circle cx="46" cy="36" r="4.6" fill="url(#wheelGrad)"/><circle cx="46" cy="36" r="1.7" fill="#d7dee7"/></svg>
         </div>
       </div>
     </div>
@@ -340,11 +361,11 @@ body.standalone .statusbar{display:none!important;}
       <h2 class="sec-title">Verfügbare Services</h2>
       <div class="grid2">
         <div class="svc">
-          <div class="ic"><svg viewBox="0 0 60 50"><ellipse cx="30" cy="42" rx="20" ry="3" fill="#c9d2dd"/><path d="M8 32c0-5 3-8 7-9l6-7c2-2 5-3 9-3h6c5 0 8 2 10 5l4 6c3 1 4 3 4 7v3H8z" fill="#e3ecf6" stroke="#9fb3c8" stroke-width="1.4"/><path d="M18 22l4-6h8v6zM32 16h7l5 6h-12z" fill="#7fa6cf"/><circle cx="18" cy="35" r="3.4" fill="#3a4a5e"/><circle cx="42" cy="35" r="3.4" fill="#3a4a5e"/></svg></div>
+          <div class="ic"><svg class="veh" viewBox="0 0 64 48"><ellipse cx="33" cy="41" rx="25" ry="4.5" fill="#0a1020" opacity=".16"/><path d="M7 32c0-4 3-6 7-7l6-7c2-3 5-4 9-4h11c6 0 9 2 12 6l4 5c3 1 5 3 5 7v2c0 2-1 3-3 3H10c-2 0-3-1-3-3z" fill="url(#carBody)" stroke="#93a4b8" stroke-width=".8"/><path d="M20 25l5-6c1-2 3-3 6-3h9c3 0 5 1 7 4l3 5z" fill="url(#carGlass)"/><path d="M24 24l4-5h3l-4 5z" fill="#fff" opacity=".5"/><path d="M12 30c2-2 6-2 10-2h26c4 0 7 0 9 2" fill="none" stroke="#fff" stroke-width="1.1" opacity=".45"/><circle cx="20" cy="35" r="5.2" fill="url(#wheelGrad)"/><circle cx="20" cy="35" r="1.9" fill="#d7dee7"/><circle cx="47" cy="35" r="5.2" fill="url(#wheelGrad)"/><circle cx="47" cy="35" r="1.9" fill="#d7dee7"/></svg></div>
           <h4>myway</h4><p>Private Fahrt</p>
         </div>
         <div class="svc">
-          <div class="ic"><svg viewBox="0 0 60 50"><ellipse cx="30" cy="42" rx="20" ry="3" fill="#cdd8cf"/><path d="M7 34V18c0-3 2-5 5-5h22l12 8v13z" fill="#e1f1e4" stroke="#8fb89a" stroke-width="1.4"/><path d="M38 15l9 6h-9z" fill="#86c79a"/><rect x="12" y="18" width="8" height="7" fill="#86c79a"/><rect x="23" y="18" width="8" height="7" fill="#86c79a"/><circle cx="17" cy="35" r="3.4" fill="#3a4a3e"/><circle cx="43" cy="35" r="3.4" fill="#3a4a3e"/></svg></div>
+          <div class="ic"><svg class="veh" viewBox="0 0 64 48"><ellipse cx="33" cy="41" rx="25" ry="4.5" fill="#0a1020" opacity=".16"/><path d="M8 34V18c0-3 2-5 5-5h20l16 9c2 1 3 2 3 5v7c0 2-1 3-3 3H11c-2 0-3-1-3-3z" fill="url(#vanBody)" stroke="#7fae8c" stroke-width=".8"/><path d="M33 14l13 8H33z" fill="url(#vanGlass)"/><rect x="13" y="16" width="9" height="8" rx="1" fill="url(#vanGlass)"/><rect x="24" y="16" width="8" height="8" rx="1" fill="url(#vanGlass)"/><path d="M14 17h7v2h-7z" fill="#fff" opacity=".4"/><path d="M10 30c2-1 5-1 8-1h30c3 0 5 0 7 1" fill="none" stroke="#fff" stroke-width="1" opacity=".4"/><circle cx="19" cy="36" r="5" fill="url(#wheelGrad)"/><circle cx="19" cy="36" r="1.8" fill="#d7dee7"/><circle cx="46" cy="36" r="5" fill="url(#wheelGrad)"/><circle cx="46" cy="36" r="1.8" fill="#d7dee7"/></svg></div>
           <h4>On-Demand</h4><p>Geteilte Fahrt</p>
         </div>
         <div class="svc" onclick="go('page-tickets')">
@@ -352,74 +373,33 @@ body.standalone .statusbar{display:none!important;}
           <h4>Ticketshop</h4><p>WendlandMobil</p>
         </div>
         <div class="svc">
-          <div class="ic"><svg viewBox="0 0 60 50"><ellipse cx="30" cy="42" rx="20" ry="3" fill="#d6cfe2"/><rect x="8" y="14" width="44" height="20" rx="3.5" fill="#cdb8e6" stroke="#9b7fc4" stroke-width="1.4"/><rect x="8" y="25" width="44" height="3.4" fill="#a07fce"/><rect x="12" y="17" width="8" height="6" fill="#efe7f8"/><rect x="23" y="17" width="8" height="6" fill="#efe7f8"/><rect x="34" y="17" width="8" height="6" fill="#efe7f8"/><circle cx="18" cy="36" r="3" fill="#3a3450"/><circle cx="42" cy="36" r="3" fill="#3a3450"/></svg></div>
+          <div class="ic"><svg class="veh" viewBox="0 0 64 48"><ellipse cx="33" cy="42" rx="26" ry="4" fill="#0a1020" opacity=".16"/><rect x="7" y="13" width="50" height="22" rx="4" fill="url(#busBody)" stroke="#9b84c4" stroke-width=".8"/><rect x="7" y="26" width="50" height="4" fill="#7c5fb0" opacity=".55"/><rect x="11" y="16" width="9" height="7" rx="1.2" fill="url(#busGlass)"/><rect x="22" y="16" width="9" height="7" rx="1.2" fill="url(#busGlass)"/><rect x="33" y="16" width="9" height="7" rx="1.2" fill="url(#busGlass)"/><rect x="44" y="16" width="9" height="7" rx="1.2" fill="url(#busGlass)"/><rect x="12" y="17" width="7" height="2" fill="#fff" opacity=".4"/><rect x="23" y="17" width="7" height="2" fill="#fff" opacity=".4"/><rect x="34" y="17" width="7" height="2" fill="#fff" opacity=".4"/><rect x="45" y="17" width="7" height="2" fill="#fff" opacity=".4"/><circle cx="18" cy="36" r="4.6" fill="url(#wheelGrad)"/><circle cx="18" cy="36" r="1.7" fill="#d7dee7"/><circle cx="46" cy="36" r="4.6" fill="url(#wheelGrad)"/><circle cx="46" cy="36" r="1.7" fill="#d7dee7"/></svg></div>
           <h4>Linienbus</h4><p>Linienverkehr</p>
         </div>
       </div>
 
       <h2 class="sec-title">Mehr über mopla</h2>
       <div class="scroller">
+        <!-- REAL PHOTOS (topical stand-ins). For an exact match, replace each src with your
+             saved crop of the screenshot, e.g. src="./foto-dticket.jpg" -->
         <div class="mcard">
-          <div class="ph"><svg viewBox="0 0 248 178" preserveAspectRatio="xMidYMid slice">
-            <rect width="248" height="178" fill="#2a2330"/>
-            <rect x="-10" y="120" width="120" height="80" rx="10" fill="#c0392b"/>
-            <rect x="150" y="0" width="120" height="178" fill="#3a3340"/>
-            <g transform="rotate(-12 124 90)">
-              <rect x="92" y="22" width="74" height="138" rx="12" fill="#0e1330" stroke="#2c3566" stroke-width="2"/>
-              <rect x="100" y="34" width="58" height="92" rx="4" fill="#fff"/>
-              <rect x="112" y="42" width="34" height="3.2" rx="1.6" fill="#161616"/>
-              <rect x="108" y="49" width="42" height="3.2" rx="1.6" fill="#d2232a"/>
-              <rect x="105" y="56" width="48" height="3.2" rx="1.6" fill="#f4b400"/>
-              <rect x="109" y="63" width="40" height="3.2" rx="1.6" fill="#f4b400"/>
-              <rect x="113" y="70" width="32" height="3.2" rx="1.6" fill="#1a237e"/>
-              <text x="129" y="84" text-anchor="middle" font-family="Inter" font-size="7" font-weight="800" fill="#1a237e">D-TICKET</text>
-              <g fill="#111">
-                <rect x="108" y="92" width="6" height="6"/><rect x="118" y="92" width="3" height="3"/><rect x="126" y="92" width="6" height="6"/><rect x="138" y="95" width="3" height="3"/><rect x="146" y="92" width="6" height="6"/>
-                <rect x="108" y="102" width="3" height="3"/><rect x="116" y="104" width="6" height="3"/><rect x="128" y="102" width="3" height="6"/><rect x="140" y="104" width="6" height="3"/>
-                <rect x="108" y="112" width="6" height="6"/><rect x="120" y="114" width="3" height="3"/><rect x="130" y="112" width="6" height="6"/><rect x="144" y="114" width="4" height="4"/>
-              </g>
-            </g>
-            <path d="M70 150c8-14 22-22 36-22 6 0 8 4 4 8-10 8-18 18-22 30z" fill="#e8b48c"/>
-          </svg></div>
+          <div class="ph" style="--pg:linear-gradient(135deg,#241a2e 0%,#3a2a44 48%,#7a3b2e 100%)">
+            <img src="https://loremflickr.com/520/360/phone,hand?lock=101" alt="Deutschlandticket" loading="lazy" onerror="this.style.display='none'">
+          </div>
           <h4>Deutschlandticket</h4>
           <p>Problemlos in ganz Deutschland für 63 €/Monat unterwegs. Mit mopla einfach buchen, kündigen oder kündigen mit definiertem Wiedereinstieg (Pausierung).</p>
         </div>
         <div class="mcard">
-          <div class="ph"><svg viewBox="0 0 248 178" preserveAspectRatio="xMidYMid slice">
-            <rect width="248" height="178" fill="#cfd6dd"/>
-            <rect x="0" y="0" width="248" height="70" fill="#aab4bd"/>
-            <rect x="20" y="10" width="60" height="50" fill="#8b97a1"/><rect x="90" y="10" width="60" height="50" fill="#9aa5ae"/><rect x="160" y="10" width="70" height="50" fill="#8b97a1"/>
-            <rect x="0" y="120" width="248" height="58" fill="#d8b27a"/>
-            <rect x="150" y="118" width="98" height="14" fill="#c98b5a"/>
-            <g>
-              <path d="M96 70c14 0 22 10 24 24l4 50H70l4-50c2-14 8-24 22-24z" fill="#e7d3b3"/>
-              <circle cx="98" cy="56" r="16" fill="#7a4a2a"/>
-              <path d="M82 52c0-12 8-20 16-20s16 8 16 20c0 4-2 6-2 6l-4-8H88l-4 8s-2-2-2-6z" fill="#d9c3a3"/>
-              <path d="M70 144h56l-4 26H74z" fill="#3a5a8c"/>
-              <path d="M118 96c8 2 14 8 16 16l-10 14-12-12z" fill="#e7d3b3"/>
-              <rect x="120" y="108" width="14" height="22" rx="2" fill="#1c2233" transform="rotate(12 127 119)"/>
-            </g>
-          </svg></div>
+          <div class="ph" style="--pg:linear-gradient(135deg,#b9a98f 0%,#8a9aa0 58%,#5f6f78 100%)">
+            <img src="https://loremflickr.com/520/360/woman,phone?lock=202" alt="Regionale Tickets" loading="lazy" onerror="this.style.display='none'">
+          </div>
           <h4>Regionale Tickets</h4>
           <p>Regionale Fahrscheine wie Tages- und Monatskarten direkt in der App kaufen.</p>
         </div>
         <div class="mcard">
-          <div class="ph"><svg viewBox="0 0 248 178" preserveAspectRatio="xMidYMid slice">
-            <rect width="248" height="178" fill="#9fb0bd"/>
-            <rect x="0" y="120" width="248" height="58" fill="#7e8c98"/>
-            <g>
-              <path d="M30 120V70c0-8 6-14 14-14h120l40 22v42z" fill="#1f6fd6"/>
-              <path d="M164 58l40 22h-40z" fill="#bfe0ff"/>
-              <rect x="44" y="70" width="34" height="26" rx="3" fill="#bfe0ff"/>
-              <rect x="86" y="70" width="34" height="26" rx="3" fill="#bfe0ff"/>
-              <text x="120" y="112" font-family="Inter" font-size="20" font-weight="800" fill="#fff">m</text>
-              <circle cx="138" cy="105" r="5" fill="#3ddc84"/>
-              <text x="146" y="112" font-family="Inter" font-size="20" font-weight="800" fill="#fff">pla</text>
-              <text x="120" y="124" font-family="Inter" font-size="9" font-weight="600" fill="#cfe3ff">my-way</text>
-              <circle cx="64" cy="124" r="12" fill="#16202e"/><circle cx="64" cy="124" r="5" fill="#9aa6b2"/>
-              <circle cx="186" cy="124" r="12" fill="#16202e"/><circle cx="186" cy="124" r="5" fill="#9aa6b2"/>
-            </g>
-          </svg></div>
+          <div class="ph" style="--pg:linear-gradient(135deg,#27406b 0%,#3f6fb0 55%,#9fb6c9 100%)">
+            <img src="https://loremflickr.com/520/360/van,transport?lock=303" alt="myway" loading="lazy" onerror="this.style.display='none'">
+          </div>
           <h4>myway</h4>
           <p>Private Fahrt bequem, lokal und flexibel buchen.</p>
         </div>
@@ -501,7 +481,6 @@ body.standalone .statusbar{display:none!important;}
   </div>
 
   <div class="dcard">
-    <span class="cut t"></span><span class="cut b"></span><span class="vline"></span>
     <div class="dtop">
       <div class="wordmark">
         <span class="w mu">m</span>
@@ -513,6 +492,7 @@ body.standalone .statusbar{display:none!important;}
       </div>
       <div class="dprice"><div class="a">63€ / Monat</div><div class="v">inkl. aktuell gültiger MwSt.</div></div>
     </div>
+    <div class="dperf"></div>
     <div class="dnamerow"><div class="dname" id="dName">Amran Hiluf</div><span class="pill-aktiv">Aktiv</span></div>
     <div class="dlbl">Gültigkeit</div>
     <div class="ddate" id="dDate">01.10.2026 – 31.10.2026</div>
@@ -527,7 +507,7 @@ body.standalone .statusbar{display:none!important;}
     </div>
     <button class="gwallet">
       <svg viewBox="0 0 48 48"><rect x="4" y="8" width="40" height="32" rx="5" fill="#4285F4"/><rect x="4" y="8" width="40" height="11" rx="5" fill="#34A853"/><rect x="4" y="8" width="14" height="32" rx="5" fill="#EA4335"/><rect x="4" y="29" width="40" height="11" rx="5" fill="#FBBC05"/></svg>
-      <span>Hinzufügen zu<br><b>Google Wallet</b></span>
+      <span><span class="gl-top">Hinzufügen zu</span><span class="gl-bot">Google Wallet</span></span>
     </button>
   </div>
 

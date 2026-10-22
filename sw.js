@@ -1,5 +1,6 @@
-const V='mopla-v2';
+const V='mopla-v4';
 const SHELL=['./index.html','./manifest.json','./icon.svg'];
+const CACHE_HOSTS=o=>o===location.origin||o.endsWith('gstatic.com')||o.endsWith('googleapis.com')||o==='loremflickr.com'||o.endsWith('loremflickr.com')||o==='images.unsplash.com'||o==='picsum.photos'||o.endsWith('picsum.photos');
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(V).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()));
 });
@@ -16,7 +17,7 @@ self.addEventListener('fetch',e=>{
   }
   e.respondWith(
     caches.match(req).then(hit=> hit || fetch(req).then(r=>{
-      if(r.ok && (url.origin===location.origin || url.hostname.endsWith('gstatic.com') || url.hostname.endsWith('googleapis.com'))){
+      if(r.ok && CACHE_HOSTS(url.hostname)){
         const cp=r.clone(); caches.open(V).then(c=>c.put(req,cp));
       }
       return r;
